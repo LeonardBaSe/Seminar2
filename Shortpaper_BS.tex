@@ -18,6 +18,11 @@
 \usepackage{comment}
 \usepackage{tikz}
 
+\usepackage{fontspec}
+\setmainfont{Myriad Pro}
+%\setsansfont{Myriad Pro}
+%\newfontfamily\computermodern{Computer Modern}
+%\setsansfont{Latin Modern}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -54,6 +59,9 @@ XYZTEST2
 \section{Analysis of IoT and NDN}
 This section will talk about the limitations of IoT devices and the challenges of the current Internet architecture.
 \subsection{The connectivity of IoT devices:}
+% The quick brown dog jumps over the lazy fox10.\\
+% \sffamily
+% The quick brown dog jumps over the lazy fox10.
 Currently IoT devices use server-client or host-to-host connection to connect. 
 In the server-client architecture every client has to communicate to the server and with a billion devices the server will be a massive bottleneck. In the host-host architecture, every host has to communicate to every other host. This results in exponential resource consumption.
 The server-client and the host-to-host model both need IP addresses for every single device, which is not possible with a billion devices.
@@ -61,31 +69,71 @@ The server-client and the host-to-host model both need IP addresses for every si
 %NDN solves the IP shortage and it is de-central helps with the bottleneck
 
 \subsection{Technological Standards:}
-The crucial standards are for the network protocols, the communication protocols, and the data aggregation. 
+The crucial standards are for the network protocols, the communication protocols, 
+and the data aggregation. 
 The challenge is that 
 %überarbeiten 
 
 
 \subsection{Mobility:}
-The amount of mobile devices is rising and so are the challenges. The technologies of the mobile devices are divers and the IoT systems need to keep that in mind.
+The amount of mobile devices is rising and so are the challenges. 
+The technologies of the mobile devices are divers and the IoT systems need to keep that in mind.
 
 %Quelle 14 und 15
 
 \subsection{Complexity and Integration Issues:}
-IoT systems are composed of many different APIs (Application Programming Interfaces), protocols and platforms. 
+IoT systems are composed of many different APIs (Application Programming Interfaces), 
+protocols and platforms. 
 %APIs expeccially are not desined with the resource limitations of IoT devices in mind. 
 % maybe add that later
-The integration of new technologies in the system is very complicated because of all the different combinations. The IoT system should consider the resource limitation of its components.
+The integration of new technologies in the system is very complicated because of all the different combinations. 
+The IoT system should consider the resource limitation of its components.
+
+%AB HIER BEGINNT B
+
+\subsection{NDN Packet Length:}
+Packages in NDN are not bound to a specific length, this is helpful to expand further protocols by adding or subtracting from the overhead.
+IoT devices will send only small packages; because of the limited resources in memory.
+The overhead needs to be kept small, because the information proportion of small packages is way more influenced by a big overhead.
+%to many packages will drain energy and put strain on the network.
+%Quelle 16
+
+\subsection{Caching in IoT/NDN:}
+To keep the data up to date and reduce unnecessary package flow, we need to integrate caches in to the system. 
+The problem is that the small devices don't have enough memory to keep an efficient cache. 
+The solution is to use in-network caching, a feature of NDN.
+%ganz kurz in-network caching erklären.
+%Quelle 11
+Even a small cache will dramatically increase the data availability [11].
+%Quelle 2
+\subsection{Data Aggregation in Wireless Networks:}
+If a user's query requests for data that includes multiple packages, every single package has to be requested separately and excluding the others.
+This results in a greater overhead and will result in a more unnecessary package flow. The new system should fix the request problem.
+
+\subsection{Naming Problems in Wireless Networks:}
+NDN supports on name-centric services [17], which facilitates access without knowing their location. There is still a need to automate naming convention, because of the size of the Networks. These Names should be kept short to minimize storage usage. 
+%Quelle 18 (3 mal)
 
 
-
+\subsection{Routing Scalability in NDN:}
+In NDN routing is managed by names, instead of of usual number based systems. The scalability of routing is important to facilitate a large network.
+% Da fehlt was mach das vielleicht später
+% Quelle 19 und 20
 
 \section{Architecture of IoT-NDN System}
+
+\includegraphics[width=0.3\textwidth]{IoT-NDN_System_architecture_and_its_components.png}\\
+IoT-NDN has three main components. The \textbf{naming} component is made up of naming schemes and structure for wireless networks.
+The \textbf{Management and control plane} is made up of Unicast Faces; Forwardinng Services Intra Node Protocol, Controlled Flooding, Configuartion and Alias services. %aus Paper Zitiert. Vielleicht über graphic kürzen.
+The \textbf{dataplan component} is made up of the caching and forwarding strategies.
+Devices that use IoT-NDN
+
+
 \section{Conclusion}
 
-\includegraphics[width=0.5\textwidth]{IoT-NDN_System_architecture_and_its_components.png}\\
-\includegraphics[width=0.5\textwidth]{IMPLEMENTED_AND_TESTED_PROTOCOLS_AND_ALGORITHMS_IN_IOT-NDN.png}\\
-\includegraphics[width=0.5\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
+
+\includegraphics[width=0.3\textwidth]{IMPLEMENTED_AND_TESTED_PROTOCOLS_AND_ALGORITHMS_IN_IOT-NDN.png}\\
+\includegraphics[width=0.3\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
 
 
 
