@@ -2,6 +2,7 @@
 \IEEEoverridecommandlockouts
 %\documentclass[a4paper,12pt]{article}
 
+%vorgegeben
 \usepackage{balance}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -18,15 +19,22 @@
 \usepackage{comment}
 \usepackage{tikz}
 
+%packages to eneble new font
 \usepackage{fontspec}
 \setmainfont{Myriad Pro}
 %\setsansfont{Myriad Pro}
 %\newfontfamily\computermodern{Computer Modern}
 %\setsansfont{Latin Modern}
 
+%no Idea why I have these
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{hyperref}
+
+%to enble captions vor the graphics
+\usepackage{caption}
+
+\usepackage{array} %enebels tabular
 
 %neue pacages vom neuen Template
 \usepackage{cite}
@@ -126,75 +134,133 @@ In NDN routing is managed by names, instead of of usual number based systems. Th
 IoT-NDN has three main components. The \textbf{naming} component is made up of naming schemes and structure for wireless networks.
 The \textbf{Management and control plane} is made up of Unicast Faces; Forwardinng Services Intra Node Protocol, Controlled Flooding, Configuartion and Alias services. %aus Paper Zitiert. Vielleicht über graphic kürzen.
 The \textbf{dataplan component} is made up of the caching and forwarding strategies.
-Devices that use IoT-NDN
+The IoT-NDN components are responsible for packages, caching, strategies and other. %grey component?
+Devices in the IoT-NDN architecture have three tables: CS, PIT and FIB.
+%Quelle 2
+NDN solves issues many issues discussed in III. For more information, see graphic 2.
+
+%\includegraphics[width=0.3\textwidth]{IMPLEMENTED_AND_TESTED_PROTOCOLS_AND_ALGORITHMS_IN_IOT-NDN.png}\\
+{\tiny
+\begin{tabular}{ | m{2,0cm} | m{1,5cm}| m{1,5cm} |  m{1,5cm} |} 
+  \hline
+  \textbf{IoT-NDN Protocols \& Algorithms}& \textbf{Implementation} & \textbf{Evaluation} & \textbf{References} \\ 
+  \hline
+  Naming and NDN Protocols & \checkmark & \checkmark & \cite{b4},\cite{b18} \\ 
+  \hline
+  Name-Centric Services & \checkmark & \checkmark & \cite{b18}\\ 
+  \hline
+  Efficient Caching Algorithm & \checkmark & \checkmark & \cite{b6},\cite{b7} \\ 
+  \hline
+  Adaptive Internet Forwarding & \checkmark & \checkmark & \cite{b6} \\ 
+  \hline
+  Control Flooding & \checkmark & \checkmark & \cite{b6} \\ 
+  \hline
+  Data Aggregation Protocol & \checkmark & \checkmark & \cite{b5} \\ 
+  \hline
+  APIs for IoT-NDN & \checkmark & \checkmark & \cite{b21},\cite{b22} \\ 
+  \hline
+
+\end{tabular}
+
+}
+
+\subsection{Naming}
+\includegraphics[width=0.3\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
+In IoT-NDN the structure in which data is addressed is hierarchical. As shown in graphic 3. 
+The first component is a global Domain-Name. 
+The second is optional and, if used, stores additional information, like node ID.
+The third component contains the application and service name.
+The fourth component contains information about the command name, command ID and additional parameters.
+The marker component would be the additional fifth component of the name, specific to IoT-NDN.
+It contains application, service or device resource information.
+The marker component can 
+%was kann sie und wofür braucht man sie?
+
+\subsection{Managment and Control Plane}
+1) \textbf{Aggregation:} Data aggregation is improtant to reduce the memory size of CS and the energy consumption, by combining similar information into one package. Data aggregation is achieved by three components. The components are: Forwarding Service, Unicast Faces and Intra Node Protocol (INP); they are explained in greater detail in [5]. 
+%erkläre Unicast Faces.#
+%was ist radio layer (die sicherungsschicht?)
+Unicast Face needs every package, in the radio layer, to include the source and destination address. 
+When a device receives a package, it will build a connection to the sender of the package. 
+This enables devices to learn their neighbors. %? stimmt das
+If a connection is lost, for this connection allocated resources will be released. 
+%später noch ergänzen
+
+2) \textbf{Controlled Flooding:}
+IoT-devices are unreliable in power or connectivity. % 70%sicher
+As a result the Forwarding Information Base (FIB) tables wont usually be populated in advance by routing information. %ziemlich eins zu eins übernommen
+Packages will transfer from one device to another and to mitigate flooding, controlled flooding is used.
+To reduce overhead and redundancy, devices will delay sending out packages. This time can be random or based on network topology.
+While a package is delayed and arrives  again at the same device, the package is not send out twice. 
+The path is selected
+%MUSS NOCH PATH SELECTION MACHEN
+
+3) \textbf{Name-Centric Services:}
+The use of a Gateway enables IoT-Devices to be reachable from any internet device. 
+The Gateway allows via protocol conversion wireless and wired connection. %falsch durch formulierung
+The Gateway provides all important configurations of names and  IoT-NDN devices. Services on the gateway can be implemented as IoT-NDN applications and communicate to each other via the IoT-NDN deamon and face. %ziemlich eins zu eins übernommen.
+To reduce the workload on the IoT devices the gateway will use aliases, that are shorter, to reduce the size  of the packages.
+Names form the recived  the internet will be mapped to names used in the Iot-NDN network.
+
+\subsection{Data Plane}
+1) \textbf{Strategy-In-Network Caching:} 
+The CS is a caching place in IoT-NDN devices, unlike Routers in the IP protocol it can send cached packages more than once.
+If receives a package request it, will first check the CS, by checking of matching prefixs. %the it will be send out
+This is done because the same data will probably be requested many times in IoT-NDN networks.
+The standard replacement strategy is LRU, but others can be implemented. %LFU und randome auch gut mit quelle 7 und 26
+Iot-NDN devices have a special probabilistic CAching STrategy (pCASTING), that considers data freshness and the charge and storage of devices. This strategy is used %among other things
+when a data package with a matching PIT is received by a device.
+% vieelicht mehr über pCasting, dann aber auch quelle 7 zitiern
+
+2) \textbf{Strategy-Forwarding:}
+The forwarding Path is selected from the FIB to forward Interest packets, by the forwarding strategy component. %ziemlich 1 zu 1 nicht gut
+by remembering the number of unsatisfied Interests, the forwarding strategy could be used to control the traffic. %auch 1 zu 1
+The forwarding component the path of the Interest by using data such as delay and throughput. % 1. wieder nah dran 2. vielleicht "Interest package" 3. funkitoniert path oder doch wie im paper?
+Forwarding steps on devices are supported by IoT-NDN and the forwarding strategy allows the requesting of lost packages in network, by using its metrics. % fehlt "name loockup"
+These metrics can be used to study the performance of every face.
+%nicht gut zu schwammig
+Fining missing packages can also be achieved with the InterestLifeTime parameter. For more info see \cite{b6}
 
 
 \section{Conclusion}
 
 
-\includegraphics[width=0.3\textwidth]{IMPLEMENTED_AND_TESTED_PROTOCOLS_AND_ALGORITHMS_IN_IOT-NDN.png}\\
-\includegraphics[width=0.3\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
 
 
 
 
-
-
-
-%\subsection{Units}
-% \begin{itemize}
-% \item Related Work
-% \item Analysis of IoT and NDN\\
-%     A$)$ Challenges of IoT\\
-%     \begin{enumerate}
-%         \item The connection of IoT \\
-%         the current paradigm are not usable for million or billions of devices.\\
-%         The server-client architecture forces every device to communicate to the server first
-%         and in the host-to-host architecture every device needs its own IP-adress.
-        
-%         \item Technology Standards\\
-%         the current IoT technological standards have a problem with the aggregation of data.
-%         the Data hase overhead to prevent data-aggregation, but the overhead consumes more energy and memory.
-%         %nochmal angucken
-        
-%         \item Mobility\\
-        
-        
-%         \item Complexity of Integration Issues
-%     \end{enumerate}
-%     B$)$ NDN for IoT\\
-%     \begin{enumerate}
-%         \item NDN Packet Lenght
-%         \item Caching in IoT/NDN
-%         \item Data Aggregation in Wireless Networks:
-%         \item Naming Problems in Wirless Networks
-%         \item Routing Scalability in NDN:
-%     \end{enumerate}
-% \item Architecture of IoT-NDN System\\
-%     graphics and stuff\\
-%     A$)$ Naming\\
-%     B$)$ Management and Control Plane\\
-%     \begin{itemize}
-%         \item Aggregation
-%         \item Controlled Flooding
-%         \item Name-Centric Service
-%     \end{itemize}
-%     C$)$ Data PLane\\
-%     \begin{itemize}
-%         \item Strategy-In-Network Caching
-%         \item Strategy-Forwarding
-%     \end{itemize}
-    
-% \end{itemize}
-
-% related Work
-
-% short introduction\\
-
-% A$)$ Challenges 1-5\\
 
 
 
 \section{References}
-XYZ
+\begin{thebibliography}{00}
+    \bibitem{b1}M. A. Heil, "IoT-NDN: An IoT Architecture via Named Data
+    Netwoking (NDN)" in Software Embedded System Department
+    Euroimmun AG, a PerkinElmer Company
+    \bibitem{b4} Z. Ren, M. Hail, and H. Hellbruck, “Ccn-wsn - a lightweight, flexible
+    content-centric networking protocol for wireless sensor networks,” in
+    Intelligent Sensors, Sensor Networks and Information Processing, 2013.
+    \bibitem{b5} T. Teubler, M. A. M. Hail, and H. Hellbr¨uck, “Efficient Data Aggregation
+    with CCNx in Wireless Sensor Networks,” in 19th EUNICE Workshop
+    on Advances in Communication Networking (EUNICE 2013), Germany.
+    \bibitem{b6}M. A. Hail, M. Amadeo, A. Molinaro, and S. Fischer, “On the performance
+    of caching and forwarding in information centric networking for
+    the iot,” in 13th International Conference on Wired and Wireless Internet
+    Communications, April 2015.
+    \bibitem{b7}——, “Caching in named data networking for the wireless internet
+    of things,” in Recent Advances in Internet of Things (RIoT), 2015
+    International Conference on, April 2015, pp. 1–6.
+    \bibitem{b18}T. Teubler, M. A. M. Hail, and H. Hellbr¨uck, “A solution for the
+    naming problem for name-centric services,” in Wired/Wireless Internet
+    Communications, A. Mellouk, S. Fowler, S. Hoceini, and B. Daachi,
+    Eds. Cham: Springer International Publishing, 2014, pp. 214–227.
+    \bibitem{b21}S. Ebers, M. A. Hail, S. Fischer, and H. Hellbr¨uck, “Api for data
+    dissemination protocols - evaluation with autocast,” in The Third World
+    Congress on Nature and Biologically Inspired Computing (NaBIC 2011).
+    Salamanca, Spain: IEEE, Oct. 2011, pp. 534–539.
+    \bibitem{b22}M. A. Hail and S. Fischer, “Flexible API for IoT Services with Named
+    Data Networking,” in 2016 IEEE International Conference on Emerging
+    Technologies and Innovative Business Practices for the Transformation
+    of Societies (IEEE EmergiTech 2016), Mauritius, Mauritius, Aug 2016.
+    \end{thebibliography}
 \end{document}
