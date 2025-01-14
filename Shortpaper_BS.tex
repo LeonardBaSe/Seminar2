@@ -46,7 +46,7 @@
 \usepackage{multirow}
 \usepackage{blindtext}
 \pgfplotsset{compat=1.18}
-\title{\textbf{Shortpaper:} IoT-NDN: An IoT Architecture via Named Data
+\title{\textbf{Short Paper:} IoT-NDN: An IoT Architecture via Named Data
 Netwoking (NDN)\\}
 \author{Leonard Boetefuer}
 \date{\today}
@@ -57,7 +57,13 @@ Netwoking (NDN)\\}
 \maketitle
 
 \begin{abstract}
-  The Internet of Things (IoT) is gaining importance in everyday life, science, and industry. While current IoT systems can be modeled in IP, future systems with over a billion devices will face great challenges. Data aggregation, naming scalability, and the handling of resource-restrained devices are problems that need to be solved. Named Data Networking (NDN), addresses many issues by using named data. IoT based on NDN (IoT-NDN) is to solve many issues that are mentioned in this work.
+  The Internet of Things (IoT) is gaining importance in everyday life, science, and industry. 
+  While current IoT systems can be modeled in IP, 
+  future systems with over a billion devices will face great challenges. 
+  Data aggregation, naming scalability, 
+  and the handling of resource-restrained devices are problems that need to be solved. 
+  Named Data Networking (NDN), addresses many issues by using named data. 
+  IoT based on NDN (IoT-NDN) is to solve many issues that are mentioned in this work.
   
   \end{abstract}
   
@@ -157,15 +163,16 @@ Netwoking (NDN)\\}
   %die Tabelle muss an die richtige stelle.
   \begin{figure}[h]
       \centering
-      \includegraphics[width=0.3\textwidth]{IoT-NDN_System_architecture_and_its_components.png}\\
+      \includegraphics[width=0.25\textwidth]{IoT-NDN_System_architecture_and_its_components.png}\\
       \caption{IoT-NDN System architecture and its components}
       \label{fig:enter-label}
   \end{figure}
   
-  The IoT-NDN has three main components that are responsible for packages, caching, strategies, and others.
-  The \textbf{naming} component is made up of naming schemes and a structure for wireless networks.
-  The \textbf{Management and control plane} is made up of Unicast Faces, Forwarding Services Intra Node Protocol, Controlled Flooding, Configuration, and Alias services. %aus Paper Zitiert. Vielleicht über graphic kürzen.
-  The \textbf{dataplan} component is made up of the caching and forwarding strategies. 
+  The IoT-NDN has three main components that are responsible for packages, caching, strategies, 
+  and others.
+  % The \textbf{naming} component is made up of naming schemes and a structure for wireless networks.
+  % The \textbf{Management and control plane} is made up of Unicast Faces, Forwarding Services Intra Node Protocol, Controlled Flooding, Configuration, and Alias services. %aus Paper Zitiert. Vielleicht über graphic kürzen.
+  % The \textbf{dataplan} component is made up of the caching and forwarding strategies. 
    %grey component?
   
   %Was ist CS, PIT und FIB? Wofür stehen die Abkürzungen?
@@ -208,19 +215,18 @@ Netwoking (NDN)\\}
   %muss an die richtige stelle (unter naming)
   \begin{figure}[h]
       \centering
-      \includegraphics[width=0.3\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
+      \includegraphics[width=0.25\textwidth]{Name_Structure_of_the_suggested_Approach.png}\\
       \caption{Name Structure of the suggested Approach}
       \label{fig:enter-label}
   \end{figure}
   
   In IoT-NDN the structure in which data is addressed is hierarchical, as shown in Fig. 2.
   The first component is a global domain name. 
-  The second is optional and, if used, stores additional information, like the node ID.
-  The third component contains the application and service name.
-  The fourth component contains the command name, command ID, and additional parameters.
+  % The second is optional and, if used, stores additional information, like the node ID.
+  % The third component contains the application and service name.
+  % The fourth component contains the command name, command ID, and additional parameters.
   The marker component is the additional fifth component of the name, specific to IoT-NDN.
   It contains application, service, or device resource information.
-  %The marker component can 
   %was kann sie und wofür braucht man sie?
   
   \subsection{Managment and Control Plane}
